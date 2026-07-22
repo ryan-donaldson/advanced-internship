@@ -1,10 +1,10 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+type Props = {
+  search: string;
+}
 
-export default function page() {
-  const params = useSearchParams();
-  const plan = params.get("plan");
+export default function page({ search }: Props) {
 
   return (
     <div className="checkout__wrapper">
@@ -15,7 +15,7 @@ export default function page() {
           <div className="checkout__plan">
             <div className="checkout__plan--label">Selected Plan:</div>
             <div className="checkout__plan--value">
-              {plan === "yearly"
+              {search === "yearly"
                 ? "Premium Plus Yearly — $99.99/year"
                 : "Premium Monthly — $9.99/month"}
             </div>
