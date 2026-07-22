@@ -6,7 +6,7 @@ import RecommendedBooks from "@/components/RecommendedBooks";
 import SuggestedBooks from "@/components/SuggestedBooks";
 import Sidebar from "@/components/Sidebar";
 
-export default async function page() {
+export default async function Page() {
   
 
   function mapBook(item: any): Book {

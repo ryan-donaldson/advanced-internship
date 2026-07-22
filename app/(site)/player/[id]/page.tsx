@@ -7,7 +7,7 @@ type Props = {
   params: Book;
 };
 
-export default async function page({ params }: Props) {
+export default async function Page({ params }: Props) {
   const { id } = await params;
 
   const res = await fetch(
