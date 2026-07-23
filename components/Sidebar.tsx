@@ -131,7 +131,7 @@ export default function Sidebar({ styles }: any) {
         onClick={toggleSidebar} // clicking outside closes it
       ></div>
 
-      <div className={isOpen ? "sidebar sidebar--open" : "sidebar sidebar--closed"}>
+      <div className={isOpen ? "sidebar sidebar--opened" : "sidebar sidebar--closed"}>
         <div className="sidebar__logo">
           <Image
             alt=""
