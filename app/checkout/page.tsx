@@ -1,12 +1,13 @@
 "use client";
-export const dynamic = "force-dynamic";
 
 import { useSearchParams } from "next/navigation";
+import { connection } from "next/server";
 
-export default function Page() {
+export default async function Page() {
   const params = useSearchParams();
   const plan = params.get("plan");
 
+  await connection();
   return (
     <div className="checkout__wrapper">
       <div className="checkout__card">
