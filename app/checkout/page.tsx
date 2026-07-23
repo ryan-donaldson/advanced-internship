@@ -1,13 +1,11 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { connection } from "next/server";
 
-export default async function Page() {
+export default function Page() {
   const params = useSearchParams();
   const plan = params.get("plan");
-
-  await connection();
+  
   return (
     <div className="checkout__wrapper">
       <div className="checkout__card">

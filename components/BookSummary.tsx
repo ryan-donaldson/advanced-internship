@@ -4,7 +4,7 @@ import { usePlayerStore } from "@/stores/playerStore";
 import { Book } from "@/types/book";
 import { useAuthStore } from "@/stores/authStore";
 import SettingsLogin from "./SettingsLogin";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 type Props = {
   data: Book;
@@ -12,10 +12,13 @@ type Props = {
 
 export default function PlayerSummary({ data }: Props) {
   const fontSize = usePlayerStore((s) => s.fontSize);
-  const user = useAuthStore((s) => s.user);
   const [showContent, setShowContent] = useState(false);
 
-  setTimeout(() => setShowContent(true), 300);
+  useEffect(() => {
+  const timer = setTimeout(() => setShowContent(true), 300);
+  return () => clearTimeout(timer);
+}, []);
+
 
   const px =
     fontSize === "small"
@@ -34,7 +37,7 @@ export default function PlayerSummary({ data }: Props) {
             <div className="audio__book--summary-title">
               <b>{data.title}</b>
             </div>
-            {data.subscriptionRequired === true ? (
+            {data.subscriptionRequired ? (
               <SettingsLogin page={"player"} />
             ) : (
               <>

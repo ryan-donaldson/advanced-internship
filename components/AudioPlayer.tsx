@@ -18,7 +18,6 @@ export default function AudioPlayer({ book }: Props) {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const progress = duration ? (currentTime / duration) * 100 : 0;
-  const user = useAuthStore((s) => s.user);
   const openLogin = useModalStore((s) => s.openLogin);
 
   // Format mm:ss
