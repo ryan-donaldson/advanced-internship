@@ -5,9 +5,11 @@ import PlanImg from "@/public/pricing-top.png";
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { usePlanStore } from "@/stores/planStore";
 
 export default function Page() {
   const router = useRouter();
+  const setPlan = usePlanStore((s) => s.setPlan);
   const faqs = [
     {
       question: "How does the free 7-day trial work?",
@@ -33,10 +35,15 @@ export default function Page() {
   ];
 
   const [openIndex, setOpenIndex] = useState<number | null>(0);
-  const [active, setActive] = useState("yearly");
+  const [active, setActive] = useState<"monthly" | "yearly">("monthly");
 
   function toggle(index: number) {
     setOpenIndex(openIndex === index ? null : index);
+  }
+
+  function handleSelect(p: "monthly" | "yearly") {
+    setPlan(p);
+    router.push("/checkout");
   }
 
   return (
@@ -172,7 +179,7 @@ export default function Page() {
               </div>
               <div className="plan__card--cta">
                 <span className="btn--wrapper">
-                  <button className="btn" style={{ width: "300px" }} onClick={() => router.push(`/checkout?plan=${active}`)}>
+                  <button className="btn" style={{ width: "300px" }} onClick={() => handleSelect(active)}>
                     {active === "yearly" ? (
                       <span>Start your free 7-day trial</span>
                     ) : (

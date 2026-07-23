@@ -1,11 +1,10 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { usePlanStore } from "@/stores/planStore";
 
 export default function Page() {
-  const params = useSearchParams();
-  const plan = params.get("plan");
-  
+  const plan = usePlanStore((s) => s.plan)
+
   return (
     <div className="checkout__wrapper">
       <div className="checkout__card">
