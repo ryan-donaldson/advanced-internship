@@ -19,6 +19,11 @@ export default function Sidebar({ styles }: any) {
   const [search, setSearch] = useState("");
   const [searchData, setSearchData] = useState<Book[]>([]);
   const [loading, setLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  function toggleSidebar() {
+    setIsOpen((prev) => !prev);
+  }
 
   function goToSettings() {
     router.push("/settings");
@@ -87,7 +92,7 @@ export default function Sidebar({ styles }: any) {
                 </div>
               </div>
             </div>
-            <div className="sidebar__toggle--btn">
+            <div className="sidebar__toggle--btn" onClick={toggleSidebar}>
               <svg
                 stroke="currentColor"
                 fill="none"
@@ -117,8 +122,16 @@ export default function Sidebar({ styles }: any) {
           )}
         </div>
       </div>
-      <div className="sidebar__overlay sidebar__overlay--hidden"></div>
-      <div className="sidebar sidebar--closed">
+      <div
+        className={
+          isOpen
+            ? "sidebar__overlay"
+            : "sidebar__overlay sidebar__overlay--hidden"
+        }
+        onClick={toggleSidebar} // clicking outside closes it
+      ></div>
+
+      <div className={isOpen ? "sidebar" : "sidebar sidebar--closed"}>
         <div className="sidebar__logo">
           <Image
             alt=""
