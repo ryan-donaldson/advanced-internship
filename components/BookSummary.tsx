@@ -34,7 +34,7 @@ export default function PlayerSummary({ data }: Props) {
             <div className="audio__book--summary-title">
               <b>{data.title}</b>
             </div>
-            {!user ? (
+            {data.subscriptionRequired === true ? (
               <SettingsLogin page={"player"} />
             ) : (
               <>

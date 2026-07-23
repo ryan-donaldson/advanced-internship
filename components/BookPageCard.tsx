@@ -30,11 +30,11 @@ export default function BookPageCard({ params }: Props) {
   }
 
   function readOrListen() {
-    if (!user) {
+    if (params.subscriptionRequired === true) {
       openLogin();
       return;
     }
-    if (user.subscriptionStatus === "basic") {
+    if (params.subscriptionRequired && user.subscriptionStatus === "basic") {
       window.location.href = "/choose-plan";
       return;
     }

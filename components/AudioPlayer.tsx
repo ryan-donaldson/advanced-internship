@@ -30,7 +30,7 @@ export default function AudioPlayer({ book }: Props) {
 
   // Play / Pause
   function togglePlay() {
-    if (!user) {
+    if (book.subscriptionRequired) {
       openLogin();
       return;
     }
@@ -49,7 +49,7 @@ export default function AudioPlayer({ book }: Props) {
 
   // Skip forward/backward
   function skip(seconds: number) {
-    if (!user) {
+    if (book.subscriptionRequired) {
       openLogin();
       return;
     }
