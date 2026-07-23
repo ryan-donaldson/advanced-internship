@@ -952,7 +952,16 @@ button:disabled {
 
 .sidebar--opened {
     transform: translateX(0);
-    width: 80%
+    width: 80%;
+    left: 0 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.sidebar--closed {
+    transform: translateX(-100%);
+    opacity: 0;
+    visibility: hidden;
 }
 
 .selected__book {
