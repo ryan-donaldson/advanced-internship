@@ -61,6 +61,7 @@ logoutUser: async () => {
     user: null,
     isAuthenticated: false,
     subscriptionStatus: "basic",
+    authReady: false,
   });
 },
 
@@ -86,18 +87,6 @@ onAuthStateChanged(auth, (user) => {
       authReady: true,
     });
     return;
-  }
-
-  // Guest user only exists in the browser
-  if (typeof window !== "undefined") {
-    const guest = localStorage.getItem("guestUser");
-    if (guest) {
-      useAuthStore.setState({
-        user: JSON.parse(guest),
-        isAuthenticated: true,
-      });
-      return;
-    }
   }
 
   // No user at all
