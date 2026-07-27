@@ -1,15 +1,12 @@
 import { create } from "zustand";
-import { auth, db } from "@/firebase/config";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { auth } from "@/firebase/config";
+import {  onAuthStateChanged } from "firebase/auth";
 
 export const useAuthStore = create((set) => ({
-  // STATE
   user: null,
   isAuthenticated: false,
-  subscriptionStatus: "Basic", // basic | premium | premium-plus
+  subscriptionStatus: "Basic",
 
-  // ACTIONS
   setUser: (user) =>
     set({
       user,
@@ -21,21 +18,18 @@ export const useAuthStore = create((set) => ({
       subscriptionStatus: status,
     }),
 
-  // Call after user is registered in Firebase
   registerUser: (user) =>
     set({
       user,
       isAuthenticated: true,
     }),
 
-  // Call after Firebase login
   loginUser: (user) =>
     set({
       user,
       isAuthenticated: true,
     }),
 
-  // Guest login (hardcoded credentials)
   guestLogin: () =>
     set({
       user: {
@@ -46,7 +40,6 @@ export const useAuthStore = create((set) => ({
       subscriptionStatus: "basic",
     }),
 
-  // Logout
   logoutUser: () =>
     set({
       user: null,
@@ -65,15 +58,12 @@ export const useAuthStore = create((set) => ({
     }),
 }));
 
-export async function register(email, password) {
-  const cred = await createUserWithEmailAndPassword(auth, email, password);
-  const user = cred.user;
-
-  // Save user in Firestore
-  await setDoc(doc(db, "users", user.uid), {
-    email: user.email,
-    subscriptionStatus: "basic",
+// For settings page
+onAuthStateChanged(auth, (user) => {
+  useAuthStore.setState({
+    user,
+    isAuthenticated: !!user,
   });
+});
 
-  return user;
-}
+console.log("AUTH LISTENER FIRED");

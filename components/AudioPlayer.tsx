@@ -2,7 +2,6 @@
 
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
-import { useAuthStore } from "@/stores/authStore";
 import { useModalStore } from "@/stores/modalStore";
 import { usePlayerStore } from "@/stores/playerStore";
 import { Book } from "@/types/book";

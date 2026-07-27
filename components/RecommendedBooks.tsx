@@ -5,7 +5,7 @@ type Props = {
   recommendedBooks: Book[]
 }
 
-export default async function RecommendedBooks({ recommendedBooks }: Props ) {
+export default function RecommendedBooks({ recommendedBooks }: Props ) {
   return (
     <>
       {recommendedBooks.map((book) => (

@@ -7,6 +7,7 @@ import { BiCrown } from "react-icons/bi";
 import { RiLeafLine } from "react-icons/ri";
 
 export default function Home() {
+  
 
   return (
     <>
