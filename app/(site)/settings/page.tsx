@@ -7,8 +7,13 @@ import Link from "next/link";
 
 export default function Page() {
   const user = useAuthStore((s) => s.user);
+  const authReady = useAuthStore((s) => s.authReady)
   const subStatus = useAuthStore((s) => s.subscriptionStatus);
 
+  if (!authReady) {
+    return <div>Loading...</div>
+  }
+  
   return (
     <div className="wrapper">
       <Sidebar />

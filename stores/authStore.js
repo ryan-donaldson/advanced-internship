@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { auth } from "@/firebase/config";
-import {  onAuthStateChanged, signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 
 export const useAuthStore = create((set) => ({
   user: null,
@@ -32,40 +32,42 @@ export const useAuthStore = create((set) => ({
     }),
 
   guestLogin: () => {
-  const guestUser = {
-    email: "guest@gmail.com",
-    uid: "guest-user",
-  };
+    const guestUser = {
+      email: "guest@gmail.com",
+      uid: "guest-user",
+    };
 
-  if (typeof window !== "undefined") {
-    localStorage.setItem("guestUser", JSON.stringify(guestUser));
-  }
+    if (typeof window !== "undefined") {
+      localStorage.setItem("guestUser", JSON.stringify(guestUser));
+    }
 
-  set({
-    user: guestUser,
-    isAuthenticated: true,
-    subscriptionStatus: "basic",
-    authReady: true,
-  });
-},
+    set({
+      user: guestUser,
+      isAuthenticated: true,
+      subscriptionStatus: "basic",
+      authReady: true,
+    });
+  },
 
+  setAuthReady: (ready) =>
+    set({
+      authReady: ready,
+    }),
 
-logoutUser: async () => {
-  await signOut(auth);
+  logoutUser: async () => {
+    await signOut(auth);
 
-  if (typeof window !== "undefined") {
-    localStorage.removeItem("guestUser");
-  }
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("guestUser");
+    }
 
-  set({
-    user: null,
-    isAuthenticated: false,
-    subscriptionStatus: "basic",
-    authReady: false,
-  });
-},
-
-
+    set({
+      user: null,
+      isAuthenticated: false,
+      subscriptionStatus: "basic",
+      authReady: false,
+    });
+  },
 
   devPremiumLogin: () =>
     set({
@@ -89,5 +91,3 @@ onAuthStateChanged(auth, (user) => {
     return;
   }
 });
-
-
