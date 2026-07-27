@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 import SearchBooks from "./SearchBooks";
 import { Book } from "@/types/book";
 import SearchSkeleton from "./SearchSkeleton";
+import Link from "next/link";
 
 export default function Sidebar({ styles }: any) {
   const pathname = usePathname();
@@ -23,10 +24,6 @@ export default function Sidebar({ styles }: any) {
 
   function toggleSidebar() {
     setIsOpen((prev) => !prev);
-  }
-
-  function goToSettings() {
-    router.push("/settings");
   }
 
   async function searchBooks(search: string) {
@@ -144,7 +141,7 @@ export default function Sidebar({ styles }: any) {
         </div>
         <div className="sidebar__wrapper" style={styles}>
           <div className="sidebar__top">
-            <a className="sidebar__link--wrapper" href="/for-you">
+            <Link className="sidebar__link--wrapper" href="/for-you">
               <div className="sidebar__link--line active--tab"></div>
               <div className="sidebar__icon--wrapper">
                 <svg
@@ -160,8 +157,8 @@ export default function Sidebar({ styles }: any) {
                 </svg>
               </div>
               <div className="sidebar__link--text">For you</div>
-            </a>
-            <a className="sidebar__link--wrapper" href="/library">
+            </Link>
+            <Link className="sidebar__link--wrapper" href="/library">
               <div className="sidebar__link--line "></div>
               <div className="sidebar__icon--wrapper">
                 <svg
@@ -177,7 +174,7 @@ export default function Sidebar({ styles }: any) {
                 </svg>
               </div>
               <div className="sidebar__link--text">My Library</div>
-            </a>
+            </Link>
             <div className="sidebar__link--wrapper sidebar__link--not-allowed">
               <div className="sidebar__link--line "></div>
               <div className="sidebar__icon--wrapper">
@@ -301,7 +298,7 @@ export default function Sidebar({ styles }: any) {
             )}
           </div>
           <div className="sidebar__bottom">
-            <a className="sidebar__link--wrapper" href="/settings">
+            <Link className="sidebar__link--wrapper" href="/settings">
               <div className="sidebar__link--line "></div>
               <div className="sidebar__icon--wrapper">
                 <svg
@@ -321,10 +318,10 @@ export default function Sidebar({ styles }: any) {
                   ></path>
                 </svg>
               </div>
-              <div className="sidebar__link--text" onClick={goToSettings}>
+              <div className="sidebar__link--text">
                 Settings
               </div>
-            </a>
+            </Link>
             <div className="sidebar__link--wrapper sidebar__link--not-allowed">
               <div className="sidebar__link--line "></div>
               <div className="sidebar__icon--wrapper">
