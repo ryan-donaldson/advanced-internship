@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
-import { usePlayerStore } from "@/stores/playerStore";
 import Image from "next/image";
 import { Suspense } from "react";
 import BookSkeleton from "@/components/BookSkeleton";
@@ -20,11 +18,8 @@ export default function ForYouClient({
   recommendedBooks,
   suggestedBooks,
 }: Props) {
-  const resetDurations = usePlayerStore((s) => s.resetDurations);
+  
 
-  useEffect(() => {
-    resetDurations();
-  }, []);
 
   return (
     <div className="row">

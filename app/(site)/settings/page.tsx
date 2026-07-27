@@ -55,13 +55,16 @@ export default function Page() {
                   Upgrade to Premium
                 </Link>
               </div>
-
-              <div className="setting__content">
-                <div className="setting__sub--title">Email</div>
-                <div className="settings__text">{user.email}</div>
-              </div>
             </>
           ) : null}
+          {user ? (
+            <div className="setting__content">
+              <div className="setting__sub--title">Email</div>
+              <div className="settings__text">{user.email}</div>
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </div>

@@ -15,6 +15,20 @@ export default function AudioDuration({ book }: Props) {
     const audio = audioRef.current;
     if (!audio) return;
 
+    const saveDuration = () => {
+      if (Number.isFinite(audio.duration)) {
+        usePlayerStore
+        .getState()
+        .setBookDuration(book.id, audio.duration);
+      }
+    };
+
+    audio.addEventListener("loadedmetadata", saveDuration);
+
+    if (audio.readyState >= 1) {
+      saveDuration();
+    }
+
     const onLoaded = (e: Event) => {
       const target = e.target as HTMLAudioElement;
       const duration = target.duration;
@@ -26,9 +40,9 @@ export default function AudioDuration({ book }: Props) {
     audio.addEventListener("loadedmetadata", onLoaded);
 
     return () => {
-      audio.removeEventListener("loadedmetadata", onLoaded);
+      audio.removeEventListener("loadedmetadata", saveDuration);
     };
-  }, [book.id]);
+  }, [book.id, book.audioLink]);
 
   return (
     <audio

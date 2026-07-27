@@ -57,7 +57,6 @@ export default async function Page() {
       <div className="wrapper">
         <Sidebar />
         <ForYouClient
-          key={Math.random()}
           selectedBook={selectedBook}
           recommendedBooks={recommendedBooks}
           suggestedBooks={suggestedBooks}

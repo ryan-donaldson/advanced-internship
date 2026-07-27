@@ -5,7 +5,7 @@ import {  onAuthStateChanged } from "firebase/auth";
 export const useAuthStore = create((set) => ({
   user: null,
   isAuthenticated: false,
-  subscriptionStatus: "Basic",
+  subscriptionStatus: "basic",
 
   setUser: (user) =>
     set({
