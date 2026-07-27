@@ -45,6 +45,7 @@ export const useAuthStore = create((set) => ({
     user: guestUser,
     isAuthenticated: true,
     subscriptionStatus: "basic",
+    authReady: true,
   });
 },
 

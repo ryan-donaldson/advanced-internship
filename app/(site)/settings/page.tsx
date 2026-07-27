@@ -10,8 +10,6 @@ export default function Page() {
   const authReady = useAuthStore((s) => s.authReady);
   const subStatus = useAuthStore((s) => s.subscriptionStatus);
 
-  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
-
   // If Firebase hasn't finished restoring the user yet
   if (!authReady) {
     return (
