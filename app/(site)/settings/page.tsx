@@ -26,9 +26,6 @@ export default function Page() {
       </div>
     );
   }
-  console.log("SETTINGS PAGE RENDERED");
-  console.log("USER:", user);
-  console.log("AUTH:", isAuthenticated);
 
   return (
     <div className="wrapper">

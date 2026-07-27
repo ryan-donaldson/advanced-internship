@@ -113,5 +113,3 @@ export default function ForYouClient({
         </div>
   );
 }
-
-console.log("FOR YOU CLIENT MOUNTED");

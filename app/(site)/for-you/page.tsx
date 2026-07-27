@@ -51,9 +51,6 @@ export default async function Page() {
 
   const suggestedBooks: Book[] = suggestedData.map(mapBook);
 
-  console.log("FOR YOU PAGE RENDERED");
-  console.log("FETCHING BOOKS");
-
 
   return (
     <>

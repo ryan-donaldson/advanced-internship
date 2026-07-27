@@ -65,5 +65,3 @@ onAuthStateChanged(auth, (user) => {
     isAuthenticated: !!user,
   });
 });
-
-console.log("AUTH LISTENER FIRED");
