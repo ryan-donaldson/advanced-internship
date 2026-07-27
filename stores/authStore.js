@@ -88,12 +88,6 @@ onAuthStateChanged(auth, (user) => {
     });
     return;
   }
-
-  // No user at all
-  useAuthStore.setState({
-    user: null,
-    isAuthenticated: false,
-  });
 });
 
 
