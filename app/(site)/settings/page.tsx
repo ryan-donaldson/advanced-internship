@@ -9,24 +9,6 @@ export default function Page() {
   const user = useAuthStore((s) => s.user);
   const subStatus = useAuthStore((s) => s.subscriptionStatus);
 
-  // NEW: handle Firebase initialization
-  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
-
-  // If Firebase hasn't finished restoring the user yet
-  if (user === null && isAuthenticated === false) {
-    return (
-      <div className="wrapper">
-        <Sidebar />
-        <div className="container">
-          <div className="row">
-            <div className="section__title page__title">Settings</div>
-            <div className="settings__text">Loading...</div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="wrapper">
       <Sidebar />
