@@ -14,8 +14,16 @@ type Props = {
 
 export default function BookCard({ book }: Props) {
   const user = useAuthStore((s) => s.user);
+  const subscriptionStatus = useAuthStore((s) => s.subscriptionStatus)
   const isLoggedIn = !!user;
   const duration = usePlayerStore((s) => s.bookDurations[book.id]);
+
+  console.log({
+  isLoggedIn,
+  subscriptionStatus: user?.subscriptionStatus,
+  subscriptionRequired: book.subscriptionRequired,
+});
+
 
   return (
     <>
@@ -23,7 +31,7 @@ export default function BookCard({ book }: Props) {
         className="for-you__recommended--books-link"
         href={`/book/${book.id}`}
       >
-        {!isLoggedIn && book.subscriptionRequired && (
+        {(!isLoggedIn || subscriptionStatus === "basic") && book.subscriptionRequired && (
           <div className="book__pill book__pill--subscription-required">
             Premium
           </div>
