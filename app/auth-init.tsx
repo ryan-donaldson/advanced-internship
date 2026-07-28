@@ -1,23 +1,55 @@
 "use client";
 
 import { useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/firebase/config";
 import { useAuthStore } from "@/stores/authStore";
 
 export default function AuthInit() {
-  const setUser = useAuthStore((s) => s.setUser);
-  const setAuthReady = useAuthStore((s) => s.setAuthReady);
-
   useEffect(() => {
-    // Restore guest user ONLY in the browser
-    const guest = localStorage.getItem("guestUser");
-    if (guest) {
-      setUser(JSON.parse(guest));
-    }
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      (firebaseUser) => {
+        if (firebaseUser) {
+          useAuthStore.setState({
+            user: firebaseUser,
+            isAuthenticated: true,
+            authReady: true,
+          });
+          return;
+        }
 
-    // Mark auth as ready
-    setAuthReady(true);
+        const savedGuest =
+          localStorage.getItem("guestUser");
+
+        if (savedGuest) {
+          try {
+            const guestUser = JSON.parse(savedGuest);
+
+            useAuthStore.setState({
+              user: guestUser,
+              isAuthenticated: true,
+              subscriptionStatus: "basic",
+              authReady: true,
+            });
+
+            return;
+          } catch {
+            localStorage.removeItem("guestUser");
+          }
+        }
+
+        useAuthStore.setState({
+          user: null,
+          isAuthenticated: false,
+          subscriptionStatus: "basic",
+          authReady: true,
+        });
+      },
+    );
+
+    return unsubscribe;
   }, []);
 
   return null;
 }
-

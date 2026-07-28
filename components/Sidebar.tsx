@@ -158,7 +158,7 @@ export default function Sidebar({ styles }: any) {
               </div>
               <div className="sidebar__link--text">For you</div>
             </Link>
-            <Link className="sidebar__link--wrapper" href="/library">
+            <Link className="sidebar__link--wrapper" href="/library" prefetch={false}>
               <div className="sidebar__link--line "></div>
               <div className="sidebar__icon--wrapper">
                 <svg

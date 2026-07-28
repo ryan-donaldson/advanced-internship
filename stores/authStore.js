@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { auth } from "@/firebase/config";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { signOut } from "firebase/auth";
 
 export const useAuthStore = create((set) => ({
   user: null,
@@ -79,40 +79,3 @@ export const useAuthStore = create((set) => ({
       subscriptionStatus: "premium",
     }),
 }));
-
-onAuthStateChanged(auth, (firebaseUser) => {
-  if (firebaseUser) {
-    useAuthStore.setState({
-      user: firebaseUser,
-      isAuthenticated: true,
-      authReady: true,
-    });
-
-    return;
-  }
-
-  const savedGuest =
-    typeof window !== "undefined"
-      ? localStorage.getItem("guestUser")
-      : null;
-
-  if (savedGuest) {
-    const guestUser = JSON.parse(savedGuest);
-
-    useAuthStore.setState({
-      user: guestUser,
-      isAuthenticated: true,
-      subscriptionStatus: "basic",
-      authReady: true,
-    });
-
-    return;
-  }
-
-  useAuthStore.setState({
-    user: null,
-    isAuthenticated: false,
-    subscriptionStatus: "basic",
-    authReady: true,
-  });
-});
