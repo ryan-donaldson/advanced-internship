@@ -7,11 +7,50 @@ import { useAuthStore } from "@/stores/authStore";
 
 export default function AuthInit() {
   useEffect(() => {
-  console.log("AUTH INIT RAN");
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      if (firebaseUser) {
+        useAuthStore.setState({
+          user: firebaseUser,
+          isAuthenticated: true,
+          authReady: true,
+        });
+        return;
+      }
 
-  const unsubscribe = onAuthStateChanged(
-    auth,
-    (firebaseUser) => {
+      const savedGuest = localStorage.getItem("guestUser");
+
+      if (savedGuest) {
+        try {
+          const guestUser = JSON.parse(savedGuest);
+
+          useAuthStore.setState({
+            user: guestUser,
+            isAuthenticated: true,
+            subscriptionStatus: "basic",
+            authReady: true,
+          });
+
+          return;
+        } catch {
+          localStorage.removeItem("guestUser");
+        }
+      }
+
+      useAuthStore.setState({
+        user: null,
+        isAuthenticated: false,
+        subscriptionStatus: "basic",
+        authReady: true,
+      });
+    });
+
+    return unsubscribe;
+  }, []);
+
+  useEffect(() => {
+    console.log("AUTH INIT RAN");
+
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       const savedGuest = localStorage.getItem("guestUser");
 
       console.log("FIREBASE USER:", firebaseUser);
@@ -24,10 +63,7 @@ export default function AuthInit() {
           authReady: true,
         });
 
-        console.log(
-          "FIREBASE STATE:",
-          useAuthStore.getState(),
-        );
+        console.log("FIREBASE STATE:", useAuthStore.getState());
 
         return;
       }
@@ -42,10 +78,7 @@ export default function AuthInit() {
           authReady: true,
         });
 
-        console.log(
-          "RESTORED GUEST STATE:",
-          useAuthStore.getState(),
-        );
+        console.log("RESTORED GUEST STATE:", useAuthStore.getState());
 
         return;
       }
@@ -56,9 +89,10 @@ export default function AuthInit() {
         subscriptionStatus: "basic",
         authReady: true,
       });
-    },
-  );
+    });
 
-  return unsubscribe;
-}, []);
+    return unsubscribe;
+  }, []);
+
+  return null;
 }
