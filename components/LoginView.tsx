@@ -4,7 +4,7 @@ import Image from "next/image";
 import googleIcon from "../public/google.png";
 import LoginButton from "./LoginButton";
 import { useRouter, usePathname } from "next/navigation";
-import { useAuthStore } from "../stores/authStore";
+import { useAuthStore } from "@/stores/authStore";
 import React from "react";
 import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";

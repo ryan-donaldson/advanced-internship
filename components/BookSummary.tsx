@@ -2,7 +2,6 @@
 
 import { usePlayerStore } from "@/stores/playerStore";
 import { Book } from "@/types/book";
-import { useAuthStore } from "@/stores/authStore";
 import SettingsLogin from "./SettingsLogin";
 import { useState, useEffect } from "react";
 

@@ -7,49 +7,58 @@ import { useAuthStore } from "@/stores/authStore";
 
 export default function AuthInit() {
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(
-      auth,
-      (firebaseUser) => {
-        if (firebaseUser) {
-          useAuthStore.setState({
-            user: firebaseUser,
-            isAuthenticated: true,
-            authReady: true,
-          });
-          return;
-        }
+  console.log("AUTH INIT RAN");
 
-        const savedGuest =
-          localStorage.getItem("guestUser");
+  const unsubscribe = onAuthStateChanged(
+    auth,
+    (firebaseUser) => {
+      const savedGuest = localStorage.getItem("guestUser");
 
-        if (savedGuest) {
-          try {
-            const guestUser = JSON.parse(savedGuest);
+      console.log("FIREBASE USER:", firebaseUser);
+      console.log("SAVED GUEST:", savedGuest);
 
-            useAuthStore.setState({
-              user: guestUser,
-              isAuthenticated: true,
-              subscriptionStatus: "basic",
-              authReady: true,
-            });
+      if (firebaseUser) {
+        useAuthStore.setState({
+          user: firebaseUser,
+          isAuthenticated: true,
+          authReady: true,
+        });
 
-            return;
-          } catch {
-            localStorage.removeItem("guestUser");
-          }
-        }
+        console.log(
+          "FIREBASE STATE:",
+          useAuthStore.getState(),
+        );
+
+        return;
+      }
+
+      if (savedGuest) {
+        const guestUser = JSON.parse(savedGuest);
 
         useAuthStore.setState({
-          user: null,
-          isAuthenticated: false,
+          user: guestUser,
+          isAuthenticated: true,
           subscriptionStatus: "basic",
           authReady: true,
         });
-      },
-    );
 
-    return unsubscribe;
-  }, []);
+        console.log(
+          "RESTORED GUEST STATE:",
+          useAuthStore.getState(),
+        );
 
-  return null;
+        return;
+      }
+
+      useAuthStore.setState({
+        user: null,
+        isAuthenticated: false,
+        subscriptionStatus: "basic",
+        authReady: true,
+      });
+    },
+  );
+
+  return unsubscribe;
+}, []);
 }
