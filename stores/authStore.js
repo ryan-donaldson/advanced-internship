@@ -80,14 +80,39 @@ export const useAuthStore = create((set) => ({
     }),
 }));
 
-onAuthStateChanged(auth, (user) => {
-  // Firebase user exists → use it
-  if (user) {
+onAuthStateChanged(auth, (firebaseUser) => {
+  if (firebaseUser) {
     useAuthStore.setState({
-      user,
+      user: firebaseUser,
       isAuthenticated: true,
       authReady: true,
     });
+
     return;
   }
+
+  const savedGuest =
+    typeof window !== "undefined"
+      ? localStorage.getItem("guestUser")
+      : null;
+
+  if (savedGuest) {
+    const guestUser = JSON.parse(savedGuest);
+
+    useAuthStore.setState({
+      user: guestUser,
+      isAuthenticated: true,
+      subscriptionStatus: "basic",
+      authReady: true,
+    });
+
+    return;
+  }
+
+  useAuthStore.setState({
+    user: null,
+    isAuthenticated: false,
+    subscriptionStatus: "basic",
+    authReady: true,
+  });
 });
